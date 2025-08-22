@@ -11,15 +11,17 @@ document.getElementById("send").addEventListener("click", async () => {
   const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь ответ максимально подробно.`;
 
   try {
-    const response = await fetch(window.API_URL, {
+    const response = await fetch(API_URL, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${window.API_KEY}`,
+        "Authorization": `Bearer ${API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: window.MODEL,
-        input: prompt
+        model: MODEL,
+        messages: [
+          { role: "user", content: prompt } // правильный формат для OpenRouter
+        ]
       })
     });
 
@@ -30,11 +32,10 @@ document.getElementById("send").addEventListener("click", async () => {
     const data = await response.json();
     console.log("Ответ OpenRouter:", data);
 
+    // Чаще всего OpenRouter возвращает текст в data.choices[0].message.content
     let text = "";
-    if (Array.isArray(data.output) && data.output.length > 0) {
-      text = data.output[0].content || data.output[0].text || JSON.stringify(data.output[0]);
-    } else if (data.output_text) {
-      text = data.output_text;
+    if (Array.isArray(data.choices) && data.choices.length > 0) {
+      text = data.choices[0].message?.content || "Нет ответа от модели";
     } else {
       text = "Нет ответа от модели";
     }
