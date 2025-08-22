@@ -3,8 +3,8 @@ document.getElementById("send").addEventListener("click", async () => {
   const field1 = document.getElementById("field1").value;
   const field2 = document.getElementById("field2").value;
 
-  // 🔑 Собираем простой prompt
-  const prompt = `Пользователь ввёл: "${field1}" и "${field2}". Составь подробный ответ.`;
+  // Простой пример prompt с подстановкой
+  const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь подробный ответ.`;
 
   try {
     const response = await fetch(API_URL, {
@@ -14,8 +14,8 @@ document.getElementById("send").addEventListener("click", async () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: MODEL,    // Точно имя модели из OpenRouter, например "mistral-7b-instruct"
-        input: prompt    // Для OpenRouter поле называется input, не messages
+        model: MODEL,   // Точное имя модели, например: "mistral-7b-instruct"
+        input: prompt   // Обязательно поле input, а не messages
       })
     });
 
@@ -26,8 +26,8 @@ document.getElementById("send").addEventListener("click", async () => {
     const data = await response.json();
     console.log("Ответ OpenRouter:", data);
 
-    // Чаще всего OpenRouter возвращает output
-    alert(data.output || "Нет ответа");
+    // Показать ответ на странице
+    alert(data.output || "Нет ответа"); // Обычно OpenRouter возвращает поле output
 
   } catch (err) {
     console.error("Ошибка запроса:", err);
