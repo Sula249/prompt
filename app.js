@@ -3,7 +3,7 @@ document.getElementById("send").addEventListener("click", async () => {
   const field1 = document.getElementById("field1").value;
   const field2 = document.getElementById("field2").value;
 
-  // 🔑 Пример простого prompt с подстановкой
+  // 🔑 Простой prompt с подстановкой
   const prompt = `  Роль: ты — мета-промпт — автоматическая фабрика промптов. Твоя задача: на основе данных пользователя сгенерировать один или несколько готовых промптов для исполнителя (LLM), причём в каждый финальный промпт обязателен вшитый исполнительный шаблон мышления (чтобы LLM действительно «думала» по шагам).
 
 ===========================
@@ -158,8 +158,10 @@ document.getElementById("send").addEventListener("click", async () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: MODEL,          // Например: "mistral-7b-instruct" или любая модель OpenRouter
-        input: prompt          // Обрати внимание: для большинства моделей OpenRouter используется поле `input`, а не messages
+        model: "mistral-7b-instruct", // точное имя модели OpenRouter
+        input: prompt,
+        temperature: 0.7,             // параметры генерации
+        max_output_tokens: 500
       })
     });
 
@@ -171,7 +173,9 @@ document.getElementById("send").addEventListener("click", async () => {
     console.log("Ответ OpenRouter:", data);
 
     // Показать ответ на странице
-    alert(data.output || "Нет ответа"); // чаще всего OpenRouter возвращает поле `output`
+    // OpenRouter чаще всего возвращает массив output
+    const outputText = data.output?.[0]?.content || data.output?.[0]?.text || "Нет ответа";
+    alert(outputText);
 
   } catch (err) {
     console.error("Ошибка запроса:", err);
