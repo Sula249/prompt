@@ -1,16 +1,16 @@
 // app.js
 
 // === НАСТРОЙКИ API ===
-const API_KEY = "ВСТАВЬ_СЮДА_СВОЙ_API_KEY"; 
-const API_URL = "https://api.openrouter.ai/v1/completions"; // стандартный URL OpenRouter
-const MODEL = "mistral-7b-instruct"; // заменяешь на любую модель OpenRouter, если нужно
+const API_KEY = "ВСТАВЬ_СЮДА_СВОЙ_API_KEY"; // Получи свой API ключ на https://openrouter.ai/keys
+const API_URL = "https://openrouter.ai/api/v1/completions"; // Это стандартный URL для OpenRouter
+const MODEL = "mistral-7b-instruct"; // Убедись, что эта модель доступна в твоём аккаунте
 
 // === ОТПРАВКА ДАННЫХ ===
 document.getElementById("send").addEventListener("click", async () => {
   const field1 = document.getElementById("field1").value;
   const field2 = document.getElementById("field2").value;
 
-  // простой prompt с подстановкой
+  // Простой prompt с подстановкой
   const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь ответ максимально подробно.`;
 
   try {
@@ -22,7 +22,7 @@ document.getElementById("send").addEventListener("click", async () => {
       },
       body: JSON.stringify({
         model: MODEL,
-        input: prompt
+        prompt: prompt // Используем поле prompt, а не input
       })
     });
 
@@ -33,8 +33,8 @@ document.getElementById("send").addEventListener("click", async () => {
     const data = await response.json();
     console.log("Ответ OpenRouter:", data);
 
-    // выводим результат на странице
-    alert(data.output || "Нет ответа");
+    // Показать ответ на странице
+    alert(data.choices?.[0]?.text || "Нет ответа");
 
   } catch (err) {
     console.error("Ошибка запроса:", err);
