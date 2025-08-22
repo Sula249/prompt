@@ -1,10 +1,14 @@
-// app.js
-import { API_KEY, API_URL, MODEL } from './config.js';
-
+// === ОТПРАВКА ДАННЫХ ===
 document.getElementById("send").addEventListener("click", async () => {
   const field1 = document.getElementById("field1").value;
   const field2 = document.getElementById("field2").value;
 
+  if (!field1 && !field2) {
+    alert("Введите хотя бы одно значение!");
+    return;
+  }
+
+  // Простой prompt с подстановкой
   const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь ответ максимально подробно.`;
 
   try {
@@ -16,7 +20,7 @@ document.getElementById("send").addEventListener("click", async () => {
       },
       body: JSON.stringify({
         model: MODEL,
-        input: prompt   // В OpenRouter для Mistral используется поле `input`
+        input: prompt   // OpenRouter ожидает поле "input", а не "messages"
       })
     });
 
@@ -27,11 +31,35 @@ document.getElementById("send").addEventListener("click", async () => {
     const data = await response.json();
     console.log("Ответ OpenRouter:", data);
 
-    // Показать ответ на странице
-    alert(data.output || "Нет ответа"); // OpenRouter возвращает поле output
+    // Чаще всего OpenRouter возвращает текст в data.output или data.output_text
+    let text = "";
+    if (Array.isArray(data.output) && data.output.length > 0) {
+      text = data.output[0].content || data.output[0].text || JSON.stringify(data.output[0]);
+    } else if (data.output_text) {
+      text = data.output_text;
+    } else {
+      text = "Нет ответа от модели";
+    }
+
+    // Добавим вывод на страницу внизу формы
+    let resultDiv = document.getElementById("result");
+    if (!resultDiv) {
+      resultDiv = document.createElement("div");
+      resultDiv.id = "result";
+      resultDiv.style.marginTop = "12px";
+      document.body.appendChild(resultDiv);
+    }
+    resultDiv.textContent = text;
 
   } catch (err) {
     console.error("Ошибка запроса:", err);
-    alert("Ошибка: " + err.message);
+    let resultDiv = document.getElementById("result");
+    if (!resultDiv) {
+      resultDiv = document.createElement("div");
+      resultDiv.id = "result";
+      resultDiv.style.marginTop = "12px";
+      document.body.appendChild(resultDiv);
+    }
+    resultDiv.textContent = "Ошибка: " + err.message;
   }
 });
