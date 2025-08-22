@@ -11,7 +11,7 @@ document.getElementById("send").addEventListener("click", async () => {
   const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь ответ максимально подробно.`;
 
   try {
-    const response = await fetch(API_URL.replace("/completions","/chat/completions"), {
+    const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${API_KEY}`,
@@ -19,7 +19,7 @@ document.getElementById("send").addEventListener("click", async () => {
       },
       body: JSON.stringify({
         model: MODEL,
-        messages: [{ role: "user", content: prompt }]
+        input: prompt
       })
     });
 
@@ -31,12 +31,15 @@ document.getElementById("send").addEventListener("click", async () => {
     console.log("Ответ OpenRouter:", data);
 
     let text = "";
-    if (data.choices && data.choices.length > 0) {
-      text = data.choices[0].message?.content || data.choices[0].text || JSON.stringify(data.choices[0]);
+    if (Array.isArray(data.output) && data.output.length > 0) {
+      text = data.output[0].content || data.output[0].text || JSON.stringify(data.output[0]);
+    } else if (data.output_text) {
+      text = data.output_text;
     } else {
       text = "Нет ответа от модели";
     }
 
+    // Добавляем вывод на страницу
     let resultDiv = document.getElementById("result");
     if (!resultDiv) {
       resultDiv = document.createElement("div");
