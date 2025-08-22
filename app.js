@@ -11,14 +11,14 @@ document.getElementById("send").addEventListener("click", async () => {
   const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь ответ максимально подробно.`;
 
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(window.API_URL, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${API_KEY}`,
+        "Authorization": `Bearer ${window.API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: MODEL,
+        model: window.MODEL,
         input: prompt
       })
     });
@@ -39,7 +39,7 @@ document.getElementById("send").addEventListener("click", async () => {
       text = "Нет ответа от модели";
     }
 
-    // Добавляем вывод на страницу
+    // Вывод на страницу
     let resultDiv = document.getElementById("result");
     if (!resultDiv) {
       resultDiv = document.createElement("div");
