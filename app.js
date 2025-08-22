@@ -8,11 +8,10 @@ document.getElementById("send").addEventListener("click", async () => {
     return;
   }
 
-  // Простой prompt с подстановкой
   const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь ответ максимально подробно.`;
 
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_URL.replace("/completions","/chat/completions"), {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${API_KEY}`,
@@ -20,7 +19,7 @@ document.getElementById("send").addEventListener("click", async () => {
       },
       body: JSON.stringify({
         model: MODEL,
-        input: prompt   // OpenRouter ожидает поле "input", а не "messages"
+        messages: [{ role: "user", content: prompt }]
       })
     });
 
@@ -31,17 +30,13 @@ document.getElementById("send").addEventListener("click", async () => {
     const data = await response.json();
     console.log("Ответ OpenRouter:", data);
 
-    // Чаще всего OpenRouter возвращает текст в data.output или data.output_text
     let text = "";
-    if (Array.isArray(data.output) && data.output.length > 0) {
-      text = data.output[0].content || data.output[0].text || JSON.stringify(data.output[0]);
-    } else if (data.output_text) {
-      text = data.output_text;
+    if (data.choices && data.choices.length > 0) {
+      text = data.choices[0].message?.content || data.choices[0].text || JSON.stringify(data.choices[0]);
     } else {
       text = "Нет ответа от модели";
     }
 
-    // Добавим вывод на страницу внизу формы
     let resultDiv = document.getElementById("result");
     if (!resultDiv) {
       resultDiv = document.createElement("div");
