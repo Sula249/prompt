@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Telegram WebApp Minimal</title>
-  <!-- Telegram WebApp API -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body {
@@ -14,7 +13,6 @@
       color: var(--tg-theme-text-color);
       font-family: sans-serif;
     }
-    /* Инпуты — Telegram их не стилизует */
     input {
       width: 100%;
       padding: 10px;
@@ -26,7 +24,6 @@
       font-size: 16px;
       box-sizing: border-box;
     }
-    /* Кнопка — берём только цвета из Telegram */
     button {
       width: 100%;
       padding: 12px;
@@ -48,7 +45,6 @@
   <input id="field2" type="text" placeholder="Введите текст 2">
   <button id="send">Отправить</button>
 
-  <!-- Подключаем отдельные скрипты -->
   <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
