@@ -14,7 +14,7 @@ document.getElementById("send").addEventListener("click", async () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: MODEL,   // Точное имя модели, например: "mistral-7b-instruct"
+        model: MODEL, "mistral-7b-instruct"
         input: prompt   // Обязательно поле input, а не messages
       })
     });
