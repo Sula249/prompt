@@ -1,4 +1,4 @@
-// === ОТПРАВКА ДАННЫХ ===
+// === ОТПРАВКА ДАННЫХ === 
 document.getElementById("send").addEventListener("click", async () => {
   const field1 = document.getElementById("field1").value;
   const field2 = document.getElementById("field2").value;
