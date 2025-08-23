@@ -1,19 +1,11 @@
 // === ОТПРАВКА ДАННЫХ === 
 document.getElementById("send").addEventListener("click", async () => {
-  const button = document.getElementById("send");
-  button.disabled = true; // блокируем кнопку
-  document.getElementById("loading").style.display = "block"; // показываем индикатор загрузки
-
   const field1 = document.getElementById("field1").value;
   const field2 = document.getElementById("field2").value;
 
   if (!field1 && !field2) {
     alert("Введите хотя бы одно значение!");
     return;
-    
-  button.disabled = false; // разблокируем кнопку
-  document.getElementById("loading").style.display = "none"; // скрываем индикатор загрузки
-
   }
 
   const prompt = `  Роль: ты — мета-промпт — автоматическая фабрика промптов. Твоя задача: на основе данных пользователя сгенерировать один или несколько готовых промптов для исполнителя (LLM), причём в каждый финальный промпт обязателен вшитый исполнительный шаблон мышления (чтобы LLM действительно «думала» по шагам).
