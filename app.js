@@ -19,7 +19,9 @@ document.getElementById("send").addEventListener("click", async () => {
       },
       body: JSON.stringify({
         model: MODEL,
-        messages: [{ role: "user", content: prompt }] // Правильная структура для chat API
+        messages: [
+          { role: "user", content: prompt } // правильный формат для OpenRouter
+        ]
       })
     });
 
@@ -30,9 +32,10 @@ document.getElementById("send").addEventListener("click", async () => {
     const data = await response.json();
     console.log("Ответ OpenRouter:", data);
 
+    // Чаще всего OpenRouter возвращает текст в data.choices[0].message.content
     let text = "";
     if (Array.isArray(data.choices) && data.choices.length > 0) {
-      text = data.choices[0].message.content || "Нет ответа от модели";
+      text = data.choices[0].message?.content || "Нет ответа от модели";
     } else {
       text = "Нет ответа от модели";
     }
