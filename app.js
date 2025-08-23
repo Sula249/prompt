@@ -1,8 +1,8 @@
-// === ОТПРАВКА ДАННЫХ ===
 document.getElementById("send").addEventListener("click", async () => {
   const field1 = document.getElementById("field1").value;
   const field2 = document.getElementById("field2").value;
   const sendBtn = document.getElementById("send");
+  const resultDiv = document.getElementById("result");
 
   if (!field1 && !field2) {
     alert("Введите хотя бы одно значение!");
@@ -11,19 +11,10 @@ document.getElementById("send").addEventListener("click", async () => {
 
   const prompt = `Пользователь ввел: ${field1} и ${field2}. Составь ответ максимально подробно.`;
 
-  // === Индикация загрузки ===
-  let resultDiv = document.getElementById("result");
-  if (!resultDiv) {
-    resultDiv = document.createElement("div");
-    resultDiv.id = "result";
-    resultDiv.style.marginTop = "12px";
-    document.body.appendChild(resultDiv);
-  }
-  resultDiv.textContent = "Загрузка...";
-
-  // === Блокировка кнопки ===
+  // === Блокировка кнопки + спиннер ===
   sendBtn.disabled = true;
-  sendBtn.textContent = "Обработка...";
+  sendBtn.innerHTML = `<span class="spinner"></span> Обработка...`;
+  resultDiv.textContent = "Загрузка...";
 
   try {
     const response = await fetch(API_URL, {
@@ -58,7 +49,7 @@ document.getElementById("send").addEventListener("click", async () => {
     console.error("Ошибка запроса:", err);
     resultDiv.textContent = "Ошибка: " + err.message;
   } finally {
-    // === Разблокировка кнопки ===
+    // === Возврат кнопки в исходное состояние ===
     sendBtn.disabled = false;
     sendBtn.textContent = "Отправить";
   }
