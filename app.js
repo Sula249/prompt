@@ -209,18 +209,18 @@ document.getElementById("send").addEventListener("click", async () => {
 
 
 
-// Запрос в Google Sheets
-await fetch("https://script.google.com/macros/s/AKfycbzv03QNp6J_H-yhi6gZ1Cn3on7xkES63qYr77jgZETluYR8GspabCmPyVKgr18YiZ8HAg/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "unknown",
-    field1,
-    field2
-  })
-});
+    // Запрос в Google Sheets
+    await fetch("https://script.google.com/macros/s/AKfycbzv03QNp6J_H-yhi6gZ1Cn3on7xkES63qYr77jgZETluYR8GspabCmPyVKgr18YiZ8HAg/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "unknown",
+        field1,
+        field2
+      })
+    });
 
 
 
