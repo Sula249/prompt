@@ -215,6 +215,15 @@ if (!copyButton) {
   copyButton.style.left = sendBtn.getBoundingClientRect().left + "px";
 
   document.body.appendChild(copyButton);
+
+  copyButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(resultDiv.textContent)
+      .then(() => {
+        copyButton.textContent = "Скопировано!";
+        setTimeout(() => copyButton.textContent = "Скопировать", 2000);
+      })
+      .catch(err => alert("Ошибка копирования: " + err));
+  });
 }
 
 
