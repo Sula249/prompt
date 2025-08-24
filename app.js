@@ -210,7 +210,7 @@ document.getElementById("send").addEventListener("click", async () => {
 
 
 // Запрос в Google Sheets
-await fetch("https://script.google.com/macros/s/AKfycbzomPQc2DlnJxTf_rS_y4q7bvMET1bOmxrkMcyD9Qob2WF-7YGTJ-3yvVE7A-9PXvEE7A/exec", {
+await fetch("https://script.google.com/macros/s/AKfycbzv03QNp6J_H-yhi6gZ1Cn3on7xkES63qYr77jgZETluYR8GspabCmPyVKgr18YiZ8HAg/exec", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
