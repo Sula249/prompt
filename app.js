@@ -209,16 +209,17 @@ document.getElementById("send").addEventListener("click", async () => {
 
 
 
-    await fetch("https://script.google.com/macros/s/AKfycbwdzIXA9hiSJtJBoqkvsoJSrJedxjN2ZmdMMbOCY2LJolQwYaugTLqKU50rpAVepfJ6pQ/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "unknown",
-        field1,
-        field2,
-        output: text
-      })
-    });
+await fetch("https://script.google.com/macros/s/AKfycbxEVvaC6qeUsDcUMtIR4Jp7B5jpCu3GQSSETgR9E6VYcAC1JvF17-qNbBd7EFmc9hme8g/exec", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "unknown",
+    field1,
+    field2,
+    output: text // ответ из модели
+  })
+});
+
 
 
     
