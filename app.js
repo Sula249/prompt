@@ -194,6 +194,25 @@ document.getElementById("send").addEventListener("click", async () => {
       document.body.appendChild(resultDiv);
     }
     resultDiv.textContent = text;
+  
+// Добавляем кнопку "Скопировать", если её ещё нет
+let copyButton = document.getElementById("copy");
+if (!copyButton) {
+  copyButton = document.createElement("button");
+  copyButton.id = "copy";
+  copyButton.textContent = "Скопировать";
+  copyButton.style.marginTop = "8px";
+  document.body.appendChild(copyButton);
+
+  copyButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(resultDiv.textContent)
+      .then(() => {
+        copyButton.textContent = "Скопировано!";
+        setTimeout(() => copyButton.textContent = "Скопировать", 2000);
+      })
+      .catch(err => alert("Ошибка копирования: " + err));
+  });
+}
 
   } catch (err) {
     console.error("Ошибка запроса:", err);
