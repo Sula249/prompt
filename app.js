@@ -207,6 +207,20 @@ document.getElementById("send").addEventListener("click", async () => {
       text = "Нет ответа от модели";
     }
 
+
+    await fetch("ТВОЙ_URL_ОТ_APPS_SCRIPT", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "unknown",
+    field1,
+    field2,
+    output: text
+  })
+});
+
+
+    
     let resultDiv = document.getElementById("result");
     if (!resultDiv) {
       resultDiv = document.createElement("div");
