@@ -14,7 +14,7 @@ if (user) {
     photo.style.display = "none"; // если аватара нет
   }
 
-  greeting.textContent = `Привет, ${user.first_name || user.username || "гость"}!`;
+  greeting.textContent = `Привет, ${user.first_name || user.username || "гость"}!👋`;
   nameBlock.textContent = user.username ? `@${user.username}` : "";
 }
 
