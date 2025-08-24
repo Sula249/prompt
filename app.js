@@ -1,4 +1,3 @@
-// === ОТПРАВКА ДАННЫХ ===
 // --- Телеграм данные ---
 const tg = window.Telegram.WebApp;
 const user = tg.initDataUnsafe?.user;
@@ -11,14 +10,15 @@ if (user) {
   if (user.photo_url) {
     photo.src = user.photo_url;
   } else {
-    photo.style.display = "none"; // если аватара нет
+    photo.style.display = "none";
   }
 
-  greeting.textContent = `Привет, ${user.first_name || user.username || "гость"}!👋`;
+  greeting.textContent = `Привет, ${user.first_name || user.username || "гость"}! 👋`;
   nameBlock.textContent = user.username ? `@${user.username}` : "";
 }
 
 
+// === ОТПРАВКА ДАННЫХ ===
 document.getElementById("send").addEventListener("click", async () => {
   const button = document.getElementById("send");
   const field1 = document.getElementById("field1").value;
@@ -175,6 +175,7 @@ document.getElementById("send").addEventListener("click", async () => {
 ===========================
 Возвращаем JSON, как указано в Блоке 4. Поле final_prompt готово к вставке в исполнителя.`;
 
+  
   // Блокируем кнопку и меняем текст
   button.disabled = true;
   button.textContent = "Обработка…";
@@ -188,7 +189,7 @@ document.getElementById("send").addEventListener("click", async () => {
       },
       body: JSON.stringify({
         model: MODEL,
-        messages: [{ role: "user", content: prompt }] // правильный формат для chat/completions
+        messages: [{ role: "user", content: prompt }]
       })
     });
 
@@ -214,7 +215,8 @@ document.getElementById("send").addEventListener("click", async () => {
       document.body.appendChild(resultDiv);
     }
     resultDiv.textContent = text;
-  
+
+    
 // === КНОПКА "СКОПИРОВАТЬ" ===
 let sendBtn = document.getElementById("send");
 let copyButton = document.getElementById("copyButton");
@@ -223,12 +225,14 @@ if (!copyButton) {
   copyButton.id = "copyButton";
   copyButton.textContent = "Скопировать";
 
+  
   // наследуем стили у send
   copyButton.style.width = getComputedStyle(sendBtn).width;
   copyButton.style.height = getComputedStyle(sendBtn).height;
   copyButton.style.fontSize = getComputedStyle(sendBtn).fontSize;
   copyButton.style.borderRadius = getComputedStyle(sendBtn).borderRadius;
 
+  
   // фиксируем
   copyButton.style.position = "fixed";
   copyButton.style.bottom = "10px";
@@ -247,9 +251,6 @@ if (!copyButton) {
 }
 
 
-
-
-
   } catch (err) {
     console.error("Ошибка запроса:", err);
     let resultDiv = document.getElementById("result");
@@ -261,6 +262,8 @@ if (!copyButton) {
     }
     resultDiv.textContent = "Ошибка: " + err.message;
   } finally {
+
+    
     // Возвращаем кнопку в нормальное состояние
     button.disabled = false;
     button.textContent = "Отправить";
