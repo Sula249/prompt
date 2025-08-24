@@ -201,7 +201,22 @@ if (!copyButton) {
   copyButton = document.createElement("button");
   copyButton.id = "copy";
   copyButton.textContent = "Скопировать";
-  copyButton.style.marginTop = "8px";
+
+  // Фиксируем кнопку внизу экрана
+  copyButton.style.position = "fixed";
+  copyButton.style.bottom = "10px";
+  copyButton.style.left = "50%";
+  copyButton.style.transform = "translateX(-50%)";
+  copyButton.style.padding = "12px 20px";
+  copyButton.style.border = "none";
+  copyButton.style.borderRadius = "8px";
+  copyButton.style.background = "#0088cc"; // можно заменить на var(--tg-theme-button-color)
+  copyButton.style.color = "#fff";
+  copyButton.style.fontSize = "16px";
+  copyButton.style.fontWeight = "bold";
+  copyButton.style.cursor = "pointer";
+  copyButton.style.zIndex = "9999";
+
   document.body.appendChild(copyButton);
 
   copyButton.addEventListener("click", () => {
@@ -213,6 +228,7 @@ if (!copyButton) {
       .catch(err => alert("Ошибка копирования: " + err));
   });
 }
+
 
   } catch (err) {
     console.error("Ошибка запроса:", err);
