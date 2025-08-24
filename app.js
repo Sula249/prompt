@@ -1,4 +1,24 @@
 // === ОТПРАВКА ДАННЫХ ===
+// --- Телеграм данные ---
+const tg = window.Telegram.WebApp;
+const user = tg.initDataUnsafe?.user;
+
+if (user) {
+  const photo = document.getElementById("user-photo");
+  const greeting = document.getElementById("user-greeting");
+  const nameBlock = document.getElementById("user-name");
+
+  if (user.photo_url) {
+    photo.src = user.photo_url;
+  } else {
+    photo.style.display = "none"; // если аватара нет
+  }
+
+  greeting.textContent = `Привет, ${user.first_name || user.username || "гость"}!`;
+  nameBlock.textContent = user.username ? `@${user.username}` : "";
+}
+
+
 document.getElementById("send").addEventListener("click", async () => {
   const button = document.getElementById("send");
   const field1 = document.getElementById("field1").value;
