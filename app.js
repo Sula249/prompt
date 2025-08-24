@@ -195,30 +195,31 @@ document.getElementById("send").addEventListener("click", async () => {
     }
     resultDiv.textContent = text;
   
-// Добавляем кнопку "Скопировать", если её ещё нет
-let copyButton = document.getElementById("copy");
+// === КНОПКА "СКОПИРОВАТЬ" ===
+let copyButton = document.getElementById("copyButton");
 if (!copyButton) {
   copyButton = document.createElement("button");
-  copyButton.id = "copy";
+  copyButton.id = "copyButton";
   copyButton.textContent = "Скопировать";
 
-  // Фиксируем кнопку внизу экрана
-copyButton.style.position = "fixed";   // фиксируем к экрану
-copyButton.style.bottom = "10px";      // всегда 10px от низа экрана
-copyButton.style.left = "50%";         // по центру
-copyButton.style.transform = "translateX(-50%)"; // выравниваем
+  // чтобы выглядела как "Отправить"
+  copyButton.className = document.getElementById("send").className;
+
+  // фиксируем внизу экрана, по центру
+  copyButton.style.position = "fixed";
+  copyButton.style.bottom = "10px";
+  copyButton.style.left = "50%";
+  copyButton.style.transform = "translateX(-50%)";
 
   document.body.appendChild(copyButton);
 
   copyButton.addEventListener("click", () => {
-    navigator.clipboard.writeText(resultDiv.textContent)
-      .then(() => {
-        copyButton.textContent = "Скопировано!";
-        setTimeout(() => copyButton.textContent = "Скопировать", 2000);
-      })
-      .catch(err => alert("Ошибка копирования: " + err));
+    navigator.clipboard.writeText(text)
+      .then(() => alert("Текст скопирован!"))
+      .catch(err => console.error("Ошибка копирования:", err));
   });
 }
+
 
 
   } catch (err) {
