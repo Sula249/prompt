@@ -209,18 +209,25 @@ document.getElementById("send").addEventListener("click", async () => {
 
 
 
-    // Запрос в Google Sheets
-    await fetch("https://script.google.com/macros/s/AKfycbzv03QNp6J_H-yhi6gZ1Cn3on7xkES63qYr77jgZETluYR8GspabCmPyVKgr18YiZ8HAg/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "unknown",
-        field1,
-        field2
-      })
-    });
+// === ЛОГ В GOOGLE SHEETS (без чтения ответа, чтобы не упасть на CORS) ===
+try {
+  await fetch("https://script.google.com/macros/s/AKfycbxOXWl2ojtUJw8CJc3RibEJK958Yo8D0MkiNs3SvfHJv2ju65nxJVBE96Usei6psW4ghg/exec", {
+    method: "POST",
+    mode: "no-cors", // <-- главное
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8" // <-- НЕЛЬЗЯ application/json
+    },
+    body: JSON.stringify({
+      user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "unknown",
+      field1,
+      field2
+    })
+  });
+  // Ответ прочитать нельзя в no-cors — и не нужно.
+} catch (e) {
+  console.error("Ошибка отправки в Google Sheets (игнорируем для UX):", e);
+}
+
 
 
 
