@@ -202,10 +202,7 @@ if (!copyButton) {
   copyButton.id = "copyButton";
   copyButton.textContent = "Скопировать";
 
-  // чтобы выглядела как "Отправить"
-  copyButton.className = document.getElementById("send").className;
-
-  // фиксируем внизу экрана, по центру
+  // фиксируем к низу экрана
   copyButton.style.position = "fixed";
   copyButton.style.bottom = "10px";
   copyButton.style.left = "50%";
@@ -219,6 +216,7 @@ if (!copyButton) {
       .catch(err => console.error("Ошибка копирования:", err));
   });
 }
+
 
 
 
