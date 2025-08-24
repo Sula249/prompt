@@ -196,26 +196,27 @@ document.getElementById("send").addEventListener("click", async () => {
     resultDiv.textContent = text;
   
 // === КНОПКА "СКОПИРОВАТЬ" ===
+let sendBtn = document.getElementById("send");
 let copyButton = document.getElementById("copyButton");
 if (!copyButton) {
   copyButton = document.createElement("button");
   copyButton.id = "copyButton";
   copyButton.textContent = "Скопировать";
 
-  // фиксируем к низу экрана
+  // наследуем стили у send
+  copyButton.style.width = getComputedStyle(sendBtn).width;
+  copyButton.style.height = getComputedStyle(sendBtn).height;
+  copyButton.style.fontSize = getComputedStyle(sendBtn).fontSize;
+  copyButton.style.borderRadius = getComputedStyle(sendBtn).borderRadius;
+
+  // фиксируем
   copyButton.style.position = "fixed";
   copyButton.style.bottom = "10px";
-  copyButton.style.left = "50%";
-  copyButton.style.transform = "translateX(-50%)";
+  copyButton.style.left = sendBtn.getBoundingClientRect().left + "px";
 
   document.body.appendChild(copyButton);
-
-  copyButton.addEventListener("click", () => {
-    navigator.clipboard.writeText(text)
-      .then(() => alert("Текст скопирован!"))
-      .catch(err => console.error("Ошибка копирования:", err));
-  });
 }
+
 
 
 
