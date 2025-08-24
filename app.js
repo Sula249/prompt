@@ -209,7 +209,7 @@ document.getElementById("send").addEventListener("click", async () => {
 
 
 
-    await fetch("ТВОЙ_URL_ОТ_APPS_SCRIPT", {
+    await fetch("https://script.google.com/macros/s/AKfycbwdzIXA9hiSJtJBoqkvsoJSrJedxjN2ZmdMMbOCY2LJolQwYaugTLqKU50rpAVepfJ6pQ/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
